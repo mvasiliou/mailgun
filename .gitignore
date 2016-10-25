@@ -1,1 +1,4 @@
-tests.py
+mailgun_key.txt
+domain.txt
+sender.txt
+receiver.txt
