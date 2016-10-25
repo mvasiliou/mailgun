@@ -7,7 +7,7 @@ class Mailgun:
         self.domain_name = domain_name
 
     def send_simple_message(self, subject, message, recipients, sender_name, sender_email):
-        self.send_message(subject, message, recipients, sender_name, sender_email)
+        return self.send_message(subject, message, recipients, sender_name, sender_email)
 
     def send__message(self, subject, message, recipients, sender_name, sender_email, attachments = [], cc = None, bcc = None, deliverytime = None, campaign = None, tag = None, dkim = False, testmode = False, tracking = True, tracking_opens = True, tracking_clicks = True, require_tls = False, skip_verification = False):
         
@@ -47,26 +47,26 @@ class Mailgun:
         user = User(sender_email, sender_name, api)
         return user
 
-    def get_logs(begin = None, end = None, ascending = False, limit = 25, pretty = True, recipient = None, event = None, mailing_list = None, attachment = None, from_email = None, message_id = None, subject = None, to = None, tags = None, severity = None):
-    return requests.get(
-        "https://api.mailgun.net/v3/"+self.domain_name+"/events",
-        auth=("api", self.api),
-        params={"begin"       : begin,#"Fri, 3 May 2013 09:00:00 -0000",
-                "end"         : end,
-                "ascending"   : ascending,
-                "limit"       : limit,
-                "pretty"      : pretty,
-                "recipient"   : recipient,
-                "event"       : event,
-                "list"        : mailing_list,
-                "attachment"  : attachment,
-                "from"        : from_email,
-                "message-id"  : message_id,
-                "subject"     : subject,
-                "to"          : to,
-                "size"        : size,
-                "tags"        : tags,
-                "severity"    : severity})
+    def get_logs(self, begin = None, end = None, ascending = False, limit = 25, pretty = True, recipient = None, event = None, mailing_list = None, attachment = None, from_email = None, message_id = None, subject = None, to = None, size = None, tags = None, severity = None):
+        return requests.get(
+            "https://api.mailgun.net/v3/"+self.domain_name+"/events",
+            auth=("api", self.api_key),
+            params={"begin"       : begin,#"Fri, 3 May 2013 09:00:00 -0000",
+                    "end"         : end,
+                    "ascending"   : ascending,
+                    "limit"       : limit,
+                    "pretty"      : pretty,
+                    "recipient"   : recipient,
+                    "event"       : event,
+                    "list"        : mailing_list,
+                    "attachment"  : attachment,
+                    "from"        : from_email,
+                    "message-id"  : message_id,
+                    "subject"     : subject,
+                    "to"          : to,
+                    "size"        : size,
+                    "tags"        : tags,
+                    "severity"    : severity})
 
     # AND 
     # OR
@@ -84,7 +84,6 @@ class User:
     def send_from_user(self, subject, message, recipients, files = []):
         self.api.send_message(subject, message, recipients, self.sender_name, self.sender_email, files = [])
 
-# o:deliverytime  Desired time of delivery. See Date Format. Note: Messages can be scheduled for a maximum of 3 days in the future.
 
 # inline  Attachment with inline disposition. Can be used to send inline images (see example). You can post multiple inline values.
 
