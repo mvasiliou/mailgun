@@ -25,27 +25,55 @@ class Mailgun:
             "https://api.mailgun.net/v3/"+self.domain_name+"/messages",
             auth=("api", self.api_key),
             files=files,
-            data={"from": sender_name + " <" + sender_email + ">",
-                  "to": recipients,
-                  "cc": cc,
-                  "bcc": bcc,
-                  "subject": subject,
-                  "html": message,
-                  "o:campaign": campaign,
-                  "o:tag": tag,
-                  "o:dkim": dkim,
-                  "o:deliverytime": deliverytime,
-                  "o:testmode": testmode,
-                  "o:tracking": tracking,
-                  "o:tracking-opens": tracking_opens,
-                  "o:tracking-clicks": tracking_clicks,
-                  "o:require-tls": require_tls,
+            data={"from"              : sender_name + " <" + sender_email + ">",
+                  "to"                : recipients,
+                  "cc"                : cc,
+                  "bcc"               : bcc,
+                  "subject"           : subject,
+                  "html"              : message,
+                  "o:campaign"        : campaign,
+                  "o:tag"             : tag,
+                  "o:dkim"            : dkim,
+                  "o:deliverytime"    : deliverytime,
+                  "o:testmode"        : testmode,
+                  "o:tracking"        : tracking,
+                  "o:tracking-opens"  : tracking_opens,
+                  "o:tracking-clicks" : tracking_clicks,
+                  "o:require-tls"     : require_tls,
                   "o:skip_verification": skip_verification})
 
     def create_user(self, sender_email, sender_name):
         api = self
         user = User(sender_email, sender_name, api)
         return user
+
+    def get_logs(begin = None, end = None, ascending = False, limit = 25, pretty = True, recipient = None, event = None, mailing_list = None, attachment = None, from_email = None, message_id = None, subject = None, to = None, tags = None, severity = None):
+    return requests.get(
+        "https://api.mailgun.net/v3/"+self.domain_name+"/events",
+        auth=("api", self.api),
+        params={"begin"       : begin,#"Fri, 3 May 2013 09:00:00 -0000",
+                "end"         : end,
+                "ascending"   : ascending,
+                "limit"       : limit,
+                "pretty"      : pretty,
+                "recipient"   : recipient,
+                "event"       : event,
+                "list"        : mailing_list,
+                "attachment"  : attachment,
+                "from"        : from_email,
+                "message-id"  : message_id,
+                "subject"     : subject,
+                "to"          : to,
+                "size"        : size,
+                "tags"        : tags,
+                "severity"    : severity})
+
+    # AND 
+    # OR
+    # ""
+    # NOT
+    # > num
+    # > num < num2
 
 class User:
     def __init__(self, sender_email, sender_name, api):
