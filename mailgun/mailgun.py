@@ -63,6 +63,4 @@ class User:
 # h:X-My-Header   h: prefix followed by an arbitrary value allows to append a custom MIME header to the message (X-My-Header in this case). For example, h:Reply-To to specify Reply-To address.
 # v:my-var    v: prefix followed by an arbitrary name allows to attach a custom JSON data to the message. See Attaching Data to Messages for more information.
 
-if __name__ == "__main__":
-    api = Mailgun("key-857c49fcaa269d0d13d9bed33630f786","mikevasiliou.com")
-    api.send__message("Test Subject","Test Message", "mvasiliou94@gmail.com","Mike V", "warroom@mikevasiliou.com")
+
